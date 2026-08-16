@@ -6,9 +6,8 @@ The UAT cases, defect observations, retests, cutover steps, communications, smok
 
 The repository validator executes deterministic checks against the included files. It verifies structure, traceability, expected evidence values, link integrity, and claim boundaries. That execution is not workflow execution, platform testing, or proof of a production outcome.
 
-All names, roles, requests, references, timings, and results are fictional or relative. The model uses no real PII, credentials, customer data, legal data, or Job Search material. It makes no claim about adoption, efficiency gains, savings, ROI, service levels, stakeholder acceptance, or enterprise scale.
+All names, roles, requests, references, timings, and results are fictional or relative. The model uses no real PII, credentials, customer data, legal data, or employment-application material. It makes no claim about adoption, efficiency gains, savings, ROI, service levels, stakeholder acceptance, or enterprise scale.
 
 The strongest evidence is the reasoning chain: requirements inform test design; observed synthetic findings lead to bounded corrections and retests; retest results inform the simulated go/no-go decision; rollback remains available; and support context survives closure. The work demonstrates analysis judgment and documentation quality, not real implementation experience.
 
-AI assisted with brainstorming, drafting, test design, and consistency checking. The project owner set the goals, scenario, constraints, and decision rules and reviewed the resulting work sample.
-
+AI assisted with brainstorming, drafting, test design, and consistency checking. The project owner set the goals, scenario, constraints, and decision rules. This local candidate has not received final owner approval and is not authorized for public release.
