@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0.0",
+  "record_role": "ImplementationReadinessSupportTransitionRepositoryReadback",
+  "terminal": "PASS_IMPLEMENTATION_READINESS_SUPPORT_TRANSITION_VALIDATION",
+  "repository_name": "implementation-readiness-support-transition",
+  "exercise_boundary": "SYNTHETIC_DOCUMENTATION_AND_EVIDENCE_ONLY; NO_REAL_IMPLEMENTATION_OR_OUTCOME",
+  "deterministic_candidate_sha256": "D30DCEF821E788D6AE32FB17B6ABD4F0BAB04620599A1DB6D3FE2AB46560FD15",
+  "accepted_source_core_sha256": "63C9DD67002FF1668828DC5D1DEC7F14610D3AEA15892105192299A0C278FCA3",
+  "controlled_ids": 56,
+  "uat": {
+    "initial_pass": 6,
+    "initial_fail": 2,
+    "passing_retests": 2,
+    "final_pass": 8
+  },
+  "defects": {
+    "total": 2,
+    "passing_retests": 2,
+    "unresolved_critical_or_high": 0
+  },
+  "smoke_checks": {
+    "total": 6,
+    "pass": 6,
+    "rollback": "NOT_INVOKED"
+  },
+  "support_model": {
+    "simulated_business_days": 3,
+    "support_cases": 3,
+    "runbooks": 3
+  },
+  "visuals": {
+    "mermaid": 2,
+    "immediate_text_alternatives": 2
+  },
+  "csv_profiles": [
+    {
+      "relative_path": "evidence/needs-requirements-acceptance-readiness.csv",
+      "rows": 24,
+      "columns": 16
+    },
+    {
+      "relative_path": "evidence/raid-decisions.csv",
+      "rows": 9,
+      "columns": 15
+    },
+    {
+      "relative_path": "evidence/uat-cases-results.csv",
+      "rows": 8,
+      "columns": 17
+    },
+    {
+      "relative_path": "evidence/defect-retests.csv",
+      "rows": 2,
+      "columns": 17
+    },
+    {
+      "relative_path": "evidence/cutover-go-no-go-rollback-smoke-checks.csv",
+      "rows": 7,
+      "columns": 18
+    }
+  ],
+  "validation_scope": "Repository structure, evidence consistency, links, claims, privacy, and deterministic content identity; no workflow or platform execution."
+}
