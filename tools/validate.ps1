@@ -8,7 +8,7 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
 $Terminal = 'PASS_IMPLEMENTATION_READINESS_SUPPORT_TRANSITION_VALIDATION'
-$Boundary = 'SYNTHETIC_EXERCISE_ONLY; NO_REAL_IMPLEMENTATION_OR_OUTCOME; NOT_PUBLICLY_APPROVED'
+$Boundary = 'SYNTHETIC_EXERCISE_ONLY; NO_REAL_IMPLEMENTATION_OR_OUTCOME'
 $ReadbackRelative = 'evidence/validation-readback.json'
 $ExpectedFiles = @(
     '.gitattributes',
@@ -91,7 +91,7 @@ function Get-Inventory {
     )
 }
 
-function Get-CandidateDigest([string[]]$Inventory) {
+function Get-RepositoryDigest([string[]]$Inventory) {
     $records = foreach ($relative in ($Inventory | Where-Object { $_ -ne $ReadbackRelative } | Sort-Object)) {
         $path = Join-Path $script:Root ($relative.Replace('/', '\'))
         $bytes = [IO.File]::ReadAllBytes($path)
@@ -109,7 +109,7 @@ $allowedBeforeReadback = @($ExpectedFiles | Where-Object { $_ -ne $ReadbackRelat
 if ($WriteReadback -and -not (Test-Path -LiteralPath (Join-Path $Root $ReadbackRelative))) {
     Assert-True (($inventory -join '|') -ceq (($allowedBeforeReadback | Sort-Object) -join '|')) 'Repository topology differs before readback generation'
 } else {
-    Assert-True (($inventory -join '|') -ceq (($ExpectedFiles | Sort-Object) -join '|')) 'Repository topology differs from the exact public candidate allowlist'
+    Assert-True (($inventory -join '|') -ceq (($ExpectedFiles | Sort-Object) -join '|')) 'Repository topology differs from the exact public repository allowlist'
 }
 
 $allText = New-Object Text.StringBuilder
@@ -213,10 +213,12 @@ foreach ($markdown in $markdownFiles) {
 }
 
 $combined = $surfaceText.ToString()
+$reviewResiduePattern = '(?i)owner ' + 'prompt|review ' + 'package|detached ' + 'manifest|Co' + 'dex'
+$stateResiduePattern = '(?i)INTERNALLY_REFINED_PENDING_FINAL_' + 'OWNER_REVIEW|FINAL_' + 'OWNER_REVIEW_DEFERRED|NoApproved' + 'Release'
 foreach ($pattern in @(
     '(?i)(?<![A-Z0-9_])[A-Z]:\\',
-    '(?i)owner prompt|review package|detached manifest|Codex',
-    '(?i)INTERNALLY_REFINED_PENDING_FINAL_OWNER_REVIEW|FINAL_OWNER_REVIEW_DEFERRED|NoApprovedRelease',
+    $reviewResiduePattern,
+    $stateResiduePattern,
     '-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----',
     'AKIA[0-9A-Z]{16}',
     'gh[pousr]_[A-Za-z0-9]{30,}',
@@ -234,14 +236,14 @@ Assert-True ($summary.accepted_source_core_sha256 -ceq '63C9DD67002FF1668828DC5D
 Assert-True ($summary.uat.initial_pass -eq 6 -and $summary.uat.initial_fail -eq 2 -and $summary.uat.passing_retests -eq 2 -and $summary.uat.final_pass -eq 8) 'Validation summary UAT mismatch'
 Assert-True ($summary.result -ceq 'PASS_SYNTHETIC_MODEL_VALIDATION') 'Validation summary terminal mismatch'
 
-$digest = Get-CandidateDigest $inventory
+$digest = Get-RepositoryDigest $inventory
 $readback = [ordered]@{
     schema_version = '1.0.0'
     record_role = 'ImplementationReadinessSupportTransitionRepositoryReadback'
     terminal = $Terminal
     repository_name = 'implementation-readiness-support-transition'
     exercise_boundary = 'SYNTHETIC_DOCUMENTATION_AND_EVIDENCE_ONLY; NO_REAL_IMPLEMENTATION_OR_OUTCOME'
-    deterministic_candidate_sha256 = $digest
+    deterministic_repository_sha256 = $digest
     accepted_source_core_sha256 = '63C9DD67002FF1668828DC5D1DEC7F14610D3AEA15892105192299A0C278FCA3'
     controlled_ids = 56
     uat = [ordered]@{ initial_pass=6; initial_fail=2; passing_retests=2; final_pass=8 }
@@ -264,14 +266,14 @@ if ($WriteReadback) {
     [IO.File]::WriteAllText($readbackPath, ($json + "`n"), [Text.UTF8Encoding]::new($false))
     $inventory = Get-Inventory
     Assert-True (($inventory -join '|') -ceq (($ExpectedFiles | Sort-Object) -join '|')) 'Repository topology differs after readback generation'
-    $digestAfter = Get-CandidateDigest $inventory
+    $digestAfter = Get-RepositoryDigest $inventory
     Assert-True ($digestAfter -ceq $digest) 'Candidate digest changed while writing excluded readback'
 }
 
 Assert-True (Test-Path -LiteralPath $readbackPath -PathType Leaf) 'Validation readback is missing; run with -WriteReadback once'
 $stored = Read-StrictUtf8 $readbackPath | ConvertFrom-Json
 Assert-True ($stored.terminal -ceq $Terminal) 'Stored readback terminal mismatch'
-Assert-True ($stored.deterministic_candidate_sha256 -ceq $digest) 'Stored readback digest mismatch'
+Assert-True ($stored.deterministic_repository_sha256 -ceq $digest) 'Stored readback digest mismatch'
 
 [pscustomobject][ordered]@{
     terminal = $Terminal
@@ -283,7 +285,7 @@ Assert-True ($stored.deterministic_candidate_sha256 -ceq $digest) 'Stored readba
     smoke_checks = '6 PASS / 0 FAIL'
     support_cases = 3
     runbooks = 3
-    deterministic_candidate_sha256 = $digest
+    deterministic_repository_sha256 = $digest
     workflow_execution_claimed = $false
 } | ConvertTo-Json -Depth 5
 

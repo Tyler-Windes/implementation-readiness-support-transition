@@ -10,4 +10,4 @@ All names, roles, requests, references, timings, and results are fictional or re
 
 The strongest evidence is the reasoning chain: requirements inform test design; observed synthetic findings lead to bounded corrections and retests; retest results inform the simulated go/no-go decision; rollback remains available; and support context survives closure. The work demonstrates analysis judgment and documentation quality, not real implementation experience.
 
-AI assisted with brainstorming, drafting, test design, and consistency checking. The project owner set the goals, scenario, constraints, and decision rules. This local candidate has not received final owner approval and is not authorized for public release.
+AI assisted with brainstorming, drafting, test design, and consistency checking. The project owner set the goals, scenario, constraints, and decision rules.

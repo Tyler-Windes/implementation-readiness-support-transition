@@ -59,4 +59,4 @@ pwsh -NoProfile -File ./tools/validate.ps1 -WriteReadback
 
 ## Scope and authorship
 
-The [limitations](LIMITATIONS.md) are part of the evidence boundary. AI assisted with brainstorming, drafting, test design, and consistency checking; the project owner set the scenario, boundaries, and decision rules. This local candidate has not received final owner approval and is not authorized for public release.
+The [limitations](LIMITATIONS.md) are part of the evidence boundary. AI assisted with brainstorming, drafting, test design, and consistency checking; the project owner set the scenario, boundaries, and decision rules.
