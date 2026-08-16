@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "record_role": "SyntheticModelValidationSummary",
+  "scenario": "Synthetic Internal Service Request Workflow Transition",
+  "exercise_boundary": "SYNTHETIC_EXERCISE_ONLY; NO_REAL_IMPLEMENTATION_OR_OUTCOME",
+  "accepted_source_core_sha256": "63C9DD67002FF1668828DC5D1DEC7F14610D3AEA15892105192299A0C278FCA3",
+  "source_validation": {
+    "gates_passed": 30,
+    "gates_failed": 0,
+    "post_freeze_passes": 2
+  },
+  "uat": {
+    "initial_pass": 6,
+    "initial_fail": 2,
+    "defects": 2,
+    "passing_retests": 2,
+    "final_pass": 8
+  },
+  "smoke_checks": {
+    "SubmissionReference": "PASS",
+    "RoutingPriority": "PASS",
+    "SingleOwner": "PASS",
+    "TransitionBlocker": "PASS",
+    "ValidationClosure": "PASS",
+    "SupportReference": "PASS",
+    "rollback": "NOT_INVOKED"
+  },
+  "support_model": {
+    "simulated_business_days": 3,
+    "support_cases": 3,
+    "runbooks": 3,
+    "ownership_handoff": "REVIEWED_IN_SIMULATION"
+  },
+  "result": "PASS_SYNTHETIC_MODEL_VALIDATION",
+  "result_limitation": "Static evidence and repository consistency only; no workflow, platform, user, or production execution."
+}
+
